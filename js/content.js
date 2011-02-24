@@ -3,7 +3,6 @@
 $(function() {
    var container = $('<div id="mu-stm"/>'), MAX_CHILDREN = 4;
   $(document.body).prepend(container);
-  container.slideDown(500);
   var onRsvp = function(rsvp) {
     if (rsvp.response != "yes") return;
     var span = $(['<div class="item"><span>', rsvp.group.group_name,
