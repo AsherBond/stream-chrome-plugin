@@ -1,14 +1,15 @@
 /* gets injected every page, creates a new port connection named c-{timestamp},
    and injects ui elems in todo the dom */
 $(function() {
-   var container = $('<div id="mu-stm"/>'), MAX_CHILDREN = 3;
+  var container = $('<div id="mu-stm"><div id="mu-stm-ch"/></div>'), MAX_CHILDREN = 10;
   $(document.body).append(container);
+  var container_ch = $('#mu-stm-ch');
   var onRsvp = function(rsvp) {
     if (rsvp.response != "yes") return;
       var span = $(['<div class="item"><span><a target="_blank" href="',rsvp.event.event_url,'">', rsvp.group.group_name,
                   "</a></span></div>"].join(""));
-    container.append(span);
-    var kids = container.children();
+    container_ch.append(span);
+    var kids = container_ch.children();
     kids.each(function(idx) {
       if (idx < kids.size() - MAX_CHILDREN) $(this).remove();
     });
