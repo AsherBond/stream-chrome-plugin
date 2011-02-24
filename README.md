@@ -10,8 +10,7 @@ A wee [Meetup.com](http://meetup.com) rsvp stream ticker for google chrome.
   * point the url bar to [chrome://extensions/](chrome://extensions/)
   * clone the [stream chrome plugin](https://github.com/meetup/stream-chrome-plugin)
 
-    cd path/to/somewhere
-    git clone git://github.com/meetup/stream-chrome-plugin.git
+    `cd path/to/somewhere && git clone git://github.com/meetup/stream-chrome-plugin.git`
 
 ### install
 
