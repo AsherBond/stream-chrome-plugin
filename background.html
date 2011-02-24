@@ -63,8 +63,8 @@
              for(p in ports) {
                ports[p].postMessage(msg);
              }
-         }
-       , registerWebsocket = function(socket) {
+          }
+        , registerWebsocket = function(socket) {
            /* inform open ports of network activity */
            socket.onopen = function(e) {
              postMessage({state:'open'});
@@ -80,7 +80,6 @@
            };
          };
         socket.close();
-        //registerWebsocket(socket);
 
         /* for single connection requests */
         chrome.extension.onRequest.addListener(onRequest);
@@ -92,6 +91,10 @@
           port.onDisconnect.addListener(function() {
               delete ports[port.name];
           });
+          port.postMessage({vis:vis});
+          if(vis && socket.readyState != WebSocket.OPEN) {
+            port.postMessage({state:'close'});
+          }
         };
         chrome.extension.onConnect.addListener(onConnect);
 

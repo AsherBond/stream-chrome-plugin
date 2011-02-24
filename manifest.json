@@ -1,10 +1,9 @@
 {
-  "name": "mu stream",
+  "name": "mu rsvp stream (beta)",
   "version": "0.1.0",
   "description": "Docks an RSVP stream ticker to top of broswer tabs",
   "background_page": "background.html",
   "browser_action": {
-    /*"popup": "popup.html",*/
      "default_title": "Meetup: rsvp stream"
   },
   "content_scripts":[{
