@@ -1,0 +1,28 @@
+body { margin:0 !important; padding:0 important; /* >:) */}
+#mu-stm {
+  display:absolute;
+  top:0;
+  font-style:helvetica, arial, sans-serif;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align:left;
+  height:20px;
+  z-index:9999;
+  margin:0;
+  color:#fff;
+  padding:.5em .5em .5em 2em;
+  display:none;
+  background: #363535;;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#363535', endColorstr='#242021');
+  background: -webkit-gradient(linear, left top, left bottom, from(#363535), to(#242021));
+  background: -moz-linear-gradient(top,  #363535,  #242021);
+}
+#mu-stm div.item {
+  color:#fff;
+  display:inline;
+  float:left;
+  font-size:16px;
+  text-shadow: -1px 0 1px #006;
+  padding-right: 2em;
+  display:none;
+}

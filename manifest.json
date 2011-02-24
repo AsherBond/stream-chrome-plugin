@@ -1,0 +1,28 @@
+{
+  "name": "mu stream",
+  "version": "0.1.0",
+  "description": "",
+  "background_page": "background.html",
+  "browser_action": {
+    "popup": "popup.html"
+  },
+  "content_scripts":[{
+      "matches":["<all_urls>"],
+      "css":["css/content.css"],
+      "js":["js/jquery.min.js", "js/content.js"]
+  }],
+  "permissions": [
+    // "bookmarks",
+    // "chrome://favicon/",
+    // "contextMenus",
+    // "cookies",
+    // "experimental",
+    // "geolocation",
+    // "history",
+    // "idle",
+    "notifications",
+    "tabs",
+    // "unlimitedStorage",
+    "https://ajax.googleapis.com/"
+   ]
+}
