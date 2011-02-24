@@ -86,7 +86,6 @@
 
         /* for long-lived connections */
         var onConnect = function(port) {
-          port.onMessage.addListener(onMessage);
           ports[port.name] = port;
           port.onDisconnect.addListener(function() {
               delete ports[port.name];
@@ -95,6 +94,7 @@
           if(vis && socket.readyState != WebSocket.OPEN) {
             port.postMessage({state:'close'});
           }
+          port.onMessage.addListener(onMessage);
         };
         chrome.extension.onConnect.addListener(onConnect);
 
