@@ -1,5 +1,5 @@
 body { margin:0 !important; padding:0 !important; /* >:) */}
-iframe { border:0px !important /* >:) */}
+iframe { border:0px !important; /* >:) */}
 #mu-stm a:link, #mu-stm a:visited {
   text-decoration:none;
   color:#fff;
@@ -40,6 +40,9 @@ iframe { border:0px !important /* >:) */}
   background-color: -webkit-gradient(linear, left top, left bottom, from(#E80756), to(#242021));
   background-color: -moz-linear-gradient(top,  #E80756,  #242021);
   -webkit-transition:background-color 0.25s linear;
+}
+#mu-stm:hover a:link, #mu-stm:hover a:visited {
+  color:#fff;
 }
 #mu-stm div.item {
   display:inline;
