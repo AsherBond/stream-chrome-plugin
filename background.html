@@ -46,13 +46,10 @@
          , ports = {}
          , socket = new WebSocket(host)
          , vis = false /* ticker visibility state */
-         , onRequest = function(request, sender, callback){
-             // single msg from content script
-           }
          , onMessage = function(msg) {
              try {
                // msg from long-lived content script
-               if(msg.state && msg.state === 'toggle') {
+               if(msg && msg.state && msg.state === 'toggle') {
                  if(socket.readyState === WebSocket.OPEN) { socket.close(); }
                  else {
                    socket = new WebSocket(host);
@@ -85,9 +82,6 @@
          };
         socket.close();
 
-        /* for single connection requests */
-        chrome.extension.onRequest.addListener(onRequest);
-
         /* for long-lived connections */
         var onConnect = function(port) {
           try {
@@ -96,7 +90,8 @@
               delete ports[port.name];
             });
             port.postMessage({vis:vis});
-            if(vis && socket.readyState != WebSocket.OPEN && socket.readyState != WebSocket.CLOSING) {
+            if(vis && socket && socket.readyState != WebSocket.OPEN &&
+               socket.readyState != WebSocket.CLOSING) {
               port.postMessage({state:'close'});
             }
             port.onMessage.addListener(onMessage);

@@ -16,14 +16,8 @@ $(function() {
     span.animate({ width: 'show' }, 1000);
   }
 , port = chrome.extension.connect({name:"c-"+ (+new Date())});
-  /*container.click(function(e) {
-    port.postMessage({state:'toggle'});
-    return true;
-  });*/
-  port.onDisconnect.addListener(function(e) {
-    // disconnected
-  });
-  port.onMessage.addListener(function(msg) {
+
+  var onMessage = function(msg) {
     try {
       if(msg.state) {
         // show connect/disconnect states
@@ -38,5 +32,11 @@ $(function() {
         container.slideDown(200);
       } else { container.slideUp(200); }
     } catch(e) { alert("onMessage error " + e); }
- });
+  };
+  port.onDisconnect.addListener(function(e) {
+    if(port.onMessage.hasListener(onMessage)) {
+      port.onMessage.removeListener(onMessage);
+    }
+  });
+  port.onMessage.addListener(onMessage);
 });
