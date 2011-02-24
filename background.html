@@ -109,6 +109,19 @@
           onMessage({state:'toggle'});
           postMessage({vis:vis});
         });
+
+        /* inject css/js into all open tabs.
+         chrome.tabs.getAllInWindow(null, function(allTabs) {
+            var cjs = chrome.extension.getURL('js/content.js')
+            , ccss =  chrome.extension.getURL('css/content.css');
+          for(var i=0, l = allTabs.length;i<l;i++) {
+            try {
+                chrome.tabs.executeScript(i, {file:cjs})
+                chrome.tabs.insertCSS(i, {file:ccss});
+            } catch(e) { console.log("error injecting tab " + i + " err " + e); }
+          }
+        });*/
+
         /* boiler plate for dynamic icons. most people will use an
            actual image for an icon with the "icons" property of manifest.json
            or the "default_icon" property of "browser_action" */

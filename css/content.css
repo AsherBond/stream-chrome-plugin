@@ -39,7 +39,7 @@ iframe { border:0px !important; /* >:) */}
   text-shadow: -1px 0 1px #242021;
   background-color:#fbfbfb;
 }
-#mu-stm:hover {
+/*#mu-stm:hover {
   color:#fff;
   background:#E80756;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#E80756', endColorstr='#242021');
@@ -49,7 +49,7 @@ iframe { border:0px !important; /* >:) */}
 }
 #mu-stm:hover a:link, #mu-stm:hover a:visited {
   color:#fff;
-}
+}*/
 #mu-stm div.item {
   display:block;
   float:left;

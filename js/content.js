@@ -16,10 +16,10 @@ $(function() {
     span.animate({ width: 'show' }, 1000);
   }
 , port = chrome.extension.connect({name:"c-"+ (+new Date())});
-  container.click(function(e) {
+  /*container.click(function(e) {
     port.postMessage({state:'toggle'});
     return true;
-  });
+  });*/
   port.onDisconnect.addListener(function(e) {
     // disconnected
   });

@@ -23,6 +23,7 @@
     // "idle",
     "notifications",
     "tabs",
+    "<all_urls>",
     // "unlimitedStorage",
     "https://ajax.googleapis.com/"
    ]
