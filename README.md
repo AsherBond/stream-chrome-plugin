@@ -23,9 +23,11 @@ At this point you should now see a little meetup icon in your chrome toolbar.
 ## usage
 
  Click the meetup icon to open an rsvp stream. This should add a streaming ticker bar to the
- top of your browser window. Click the bar to pause it. Click it again to unpause it.
+ top of your browser window.
 
- Click the meetup icon to toggle the ticker, on and off
+ Click the bar to pause it. Click it again to unpause. The bar will be dark when connected, and white when paused.
+
+ Click the meetup icon to toggle the tickers visibility, on and off
 
  Click the Group names to visit the event page for the rsvp being streamed.
 

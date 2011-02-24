@@ -50,19 +50,23 @@
              // single msg from content script
            }
          , onMessage = function(msg) {
-             // msg from long-lived content script
-             if(msg.state && msg.state === 'toggle') {
-               if(socket.readyState == WebSocket.OPEN) { socket.close(); }
-               else {
-                 socket = new WebSocket(host);
-                 registerWebsocket(socket);
+             try {
+               // msg from long-lived content script
+               if(msg.state && msg.state === 'toggle') {
+                 if(socket.readyState === WebSocket.OPEN) { socket.close(); }
+                 else {
+                   socket = new WebSocket(host);
+                   registerWebsocket(socket);
+                 }
                }
-             }
+             } catch(e) { alert("onMessage error " + e); }
            }
          , postMessage = function(msg) {
-             for(p in ports) {
-               ports[p].postMessage(msg);
-             }
+             try {
+               for(p in ports) {
+                 ports[p].postMessage(msg);
+               }
+             } catch(e) { alert("postMessage error " + e); }
           }
         , registerWebsocket = function(socket) {
            /* inform open ports of network activity */
@@ -72,7 +76,7 @@
            socket.onclose = function(e) {
              postMessage({state:'close'});
            };
-           socket.onerror = function(e, err) {
+           socket.onerror = function(e) {
              postMessage({state:'error'});
            };
            socket.onmessage = function(e) {
@@ -86,15 +90,17 @@
 
         /* for long-lived connections */
         var onConnect = function(port) {
-          ports[port.name] = port;
-          port.onDisconnect.addListener(function() {
+          try {
+            ports[port.name] = port;
+            port.onDisconnect.addListener(function() {
               delete ports[port.name];
-          });
-          port.postMessage({vis:vis});
-          if(vis && socket.readyState != WebSocket.OPEN) {
-            port.postMessage({state:'close'});
-          }
-          port.onMessage.addListener(onMessage);
+            });
+            port.postMessage({vis:vis});
+            if(vis && socket.readyState != WebSocket.OPEN && socket.readyState != WebSocket.CLOSING) {
+              port.postMessage({state:'close'});
+            }
+            port.onMessage.addListener(onMessage);
+          } catch(e) { alert("onConnect error" + e); }
         };
         chrome.extension.onConnect.addListener(onConnect);
 

@@ -2,7 +2,7 @@
    and injects ui elems in todo the dom */
 $(function() {
    var container = $('<div id="mu-stm"/>'), MAX_CHILDREN = 3;
-  $(document.body).prepend(container);
+  $(document.body).append(container);
   var onRsvp = function(rsvp) {
     if (rsvp.response != "yes") return;
       var span = $(['<div class="item"><span><a target="_blank" href="',rsvp.event.event_url,'">', rsvp.group.group_name,
@@ -23,17 +23,19 @@ $(function() {
     // disconnected
   });
   port.onMessage.addListener(function(msg) {
-    if(msg.state) {
-      // show connect/disconnect states
-       if(msg.state == 'close') {
-          container.addClass("mu-conn-closed");
-       } else {
-         container.removeClass("mu-conn-closed");
-       }
-    } else if(msg.rsvp) {
-      onRsvp(msg.rsvp);
-    } else if(msg.vis) {
+    try {
+      if(msg.state) {
+        // show connect/disconnect states
+         if(msg.state == 'close') {
+           container.addClass("mu-conn-closed");
+         } else {
+           container.removeClass("mu-conn-closed");
+         }
+      } else if(msg.rsvp) {
+        onRsvp(msg.rsvp);
+      } else if(msg.vis) {
         container.slideDown(200);
-    } else { container.slideUp(200); }
+      } else { container.slideUp(200); }
+    } catch(e) { alert("onMessage error " + e); }
  });
 });
