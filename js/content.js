@@ -1,10 +1,9 @@
 /* gets injected every page, creates a new port connection named c-{timestamp},
    and injects ui elems in todo the dom */
 $(function() {
-    var container = $('<div id="mu-stm"/>'), MAX_CHILDREN = 3;
+   var container = $('<div id="mu-stm"/>'), MAX_CHILDREN = 4;
   $(document.body).prepend(container);
   container.slideDown(500);
-
   var onRsvp = function(rsvp) {
     if (rsvp.response != "yes") return;
     var span = $(['<div class="item"><span>', rsvp.group.group_name,
@@ -17,7 +16,11 @@ $(function() {
     span.animate({ width: 'show' }, 1000);
   }
 , port = chrome.extension.connect({name:"c-"+ (+new Date())});
-
+  container.click(function(e) {
+    e.preventDefault();
+    port.postMessage({state:'toggle'});
+    return false;
+  });
   port.onDisconnect.addListener(function(e) {
     // disconnected
   });
@@ -26,6 +29,8 @@ $(function() {
       // show connect/disconnect states
     } else if(msg.rsvp) {
       onRsvp(msg.rsvp);
-    }
+    } else if(msg.vis) {
+        container.slideDown(200);
+    } else { container.slideUp(200); }
  });
 });

@@ -45,31 +45,42 @@
         var host = "ws://stream.meetup.com/2/rsvps"
          , ports = {}
          , socket = new WebSocket(host)
+         , vis = true /* true if ticker should be vis, false otherwise */
          , onRequest = function(request, sender, callback){
              // single msg from content script
            }
          , onMessage = function(msg) {
              // msg from long-lived content script
+             if(msg.state && msg.state === 'toggle') {
+               if(socket.readyState == WebSocket.OPEN) { socket.close(); }
+               else {
+                 socket = new WebSocket(host);
+                 registerWebsocket(socket);
+               }
+             }
            }
          , postMessage = function(msg) {
              for(p in ports) {
                ports[p].postMessage(msg);
              }
+         }
+       , registerWebsocket = function(socket) {
+           /* inform open ports of network activity */
+           socket.onopen = function(e) {
+             postMessage({state:'open'});
            };
+           socket.onclose = function(e) {
+             postMessage({state:'close'});
+           };
+           socket.onerror = function(e, err) {
+             postMessage({state:'error'});
+           };
+           socket.onmessage = function(e) {
+             postMessage({rsvp:JSON.parse(e.data)});
+           };
+         };
 
-        /* inform open ports of network activity */
-        socket.onopen = function(e) {
-          postMessage({state:'open'});
-        };
-        socket.onclose = function(e) {
-          postMessage({state:'close'});
-        };
-        socket.onerror = function(e, err) {
-          postMessage({state:'error'});
-        };
-        socket.onmessage = function(e) {
-          postMessage({rsvp:JSON.parse(e.data)});
-        };
+        registerWebsocket(socket);
 
         /* for single connection requests */
         chrome.extension.onRequest.addListener(onRequest);
@@ -84,6 +95,10 @@
         };
         chrome.extension.onConnect.addListener(onConnect);
 
+        chrome.browserAction.onClicked.addListener(function(tab) {
+          vis = !vis;
+          postMessage({vis:vis});
+        });
         /* boiler plate for dynamic icons. most people will use an
            actual image for an icon with the "icons" property of manifest.json
            or the "default_icon" property of "browser_action" */

@@ -1,16 +1,18 @@
 {
   "name": "mu stream",
   "version": "0.1.0",
-  "description": "",
+  "description": "Docks an RSVP stream ticker to top of broswer tabs",
   "background_page": "background.html",
   "browser_action": {
-    "popup": "popup.html"
+    /*"popup": "popup.html",*/
+     "default_title": "Meetup: rsvp stream"
   },
   "content_scripts":[{
-      "matches":["<all_urls>"],
-      "css":["css/content.css"],
-      "js":["js/jquery.min.js", "js/content.js"]
+    "matches":["<all_urls>"],
+    "css":["css/content.css"],
+    "js":["js/jquery.min.js", "js/content.js"]
   }],
+  "homepage_url":"http://www.meetup.com/api",
   "permissions": [
     // "bookmarks",
     // "chrome://favicon/",
