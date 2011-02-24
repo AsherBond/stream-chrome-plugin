@@ -1,5 +1,9 @@
 body { margin:0 !important; padding:0 !important; /* >:) */}
 iframe { border:0px !important /* >:) */}
+#mu-stm a:link, #mu-stm a:visited {
+  text-decoration:none;
+  color:#fff;
+}
 #mu-stm {
   display:absolute;
   width:100%;
@@ -20,6 +24,9 @@ iframe { border:0px !important /* >:) */}
   background-color: -webkit-gradient(linear, left top, left bottom, from(#363535), to(#242021));
   background-color: -moz-linear-gradient(top,  #363535,  #242021);
   -webkit-transition:background-color 0.25s linear;
+}
+#mu-stm.mu-conn-closed a:link, #mu-stm.mu-conn-closed a:visited {
+  color:#E80756;
 }
 #mu-stm.mu-conn-closed {
   color:#E80756;

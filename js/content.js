@@ -5,8 +5,8 @@ $(function() {
   $(document.body).prepend(container);
   var onRsvp = function(rsvp) {
     if (rsvp.response != "yes") return;
-    var span = $(['<div class="item"><span>', rsvp.group.group_name,
-                  "</span></div>"].join(""));
+      var span = $(['<div class="item"><span><a target="_blank" href="',rsvp.event.event_url,'">', rsvp.group.group_name,
+                  "</a></span></div>"].join(""));
     container.append(span);
     var kids = container.children();
     kids.each(function(idx) {
@@ -16,9 +16,8 @@ $(function() {
   }
 , port = chrome.extension.connect({name:"c-"+ (+new Date())});
   container.click(function(e) {
-    e.preventDefault();
     port.postMessage({state:'toggle'});
-    return false;
+    return true;
   });
   port.onDisconnect.addListener(function(e) {
     // disconnected
