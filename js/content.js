@@ -12,7 +12,7 @@ $(function() {
     container.append(span);
     var kids = container.children();
     kids.each(function(idx) {
-      if (idx < childs.size() - MAX) $(this).remove();
+      if (idx < kids.size() - MAX_CHILDREN) $(this).remove();
     });
     span.animate({ width: 'show' }, 1000);
   }
