@@ -1,23 +1,31 @@
-/* gets injected every page */
+/* gets injected every page, creates a new port connection named c-{timestamp},
+   and injects ui elems in todo the dom */
 $(function() {
-  var port = chrome.extension.connect(),
-    socket = new WebSocket("ws://stream.meetup.com/2/rsvps"),
-    container = $('<div id="mu-stm"/>');
-  socket.onopen = function(e) { };
-  socket.onclose = function(e) { };
+    var container = $('<div id="mu-stm"/>'), MAX_CHILDREN = 3;
   $(document.body).prepend(container);
   container.slideDown(500);
-  socket.onmessage = function(event) {
-    var rsvp = JSON.parse(event.data);
+
+  var onRsvp = function(rsvp) {
     if (rsvp.response != "yes") return;
     var span = $(['<div class="item"><span>', rsvp.group.group_name,
                   "</span></div>"].join(""));
     container.append(span);
-    var childs = container.children();
-    var MAX = 3; /* max we think might still be on screen */
-    childs.each(function(idx) {
-       if (idx < childs.size() - MAX) $(this).remove();
+    var kids = container.children();
+    kids.each(function(idx) {
+      if (idx < childs.size() - MAX) $(this).remove();
     });
     span.animate({ width: 'show' }, 1000);
-  };
+  }
+, port = chrome.extension.connect({name:"c-"+ (+new Date())});
+
+  port.onDisconnect.addListener(function(e) {
+    // disconnected
+  });
+  port.onMessage.addListener(function(msg) {
+    if(msg.state) {
+      // show connect/disconnect states
+    } else if(msg.rsvp) {
+      onRsvp(msg.rsvp);
+    }
+ });
 });

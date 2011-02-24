@@ -42,26 +42,53 @@
       /** called when background page is ready */
       var init = function() {
         /* background processing here */
-        /* TODO figure out how to use one open socket from all tabs. maybe postMessage...*/
-        /*var stream = "ws://stream.meetup.com/2/rsvps", socket = null;
-        if(window.WebSocket) {
-          var s = new WebSocket(stream);
-          s.onmessage = function(e) {
-            var rsvp = JSON.parse(e.data);
-          };
-          s.onopen = function(e)  { alert("socket open"); };
-          s.onclose = function(e) { alert("socket closed"); };
-          s.onerror = function(e) { alert("socket error " + e); };
-        }*/
+        var host = "ws://stream.meetup.com/2/rsvps"
+         , ports = {}
+         , socket = new WebSocket(host)
+         , onRequest = function(request, sender, callback){
+             // single msg from content script
+           }
+         , onMessage = function(msg) {
+             // msg from long-lived content script
+           }
+         , postMessage = function(msg) {
+             for(p in ports) {
+               ports[p].postMessage(msg);
+             }
+           };
+
+        /* inform open ports of network activity */
+        socket.onopen = function(e) {
+          postMessage({state:'open'});
+        };
+        socket.onclose = function(e) {
+          postMessage({state:'close'});
+        };
+        socket.onerror = function(e, err) {
+          postMessage({state:'error'});
+        };
+        socket.onmessage = function(e) {
+          postMessage({rsvp:JSON.parse(e.data)});
+        };
+
+        /* for single connection requests */
+        chrome.extension.onRequest.addListener(onRequest);
+
+        /* for long-lived connections */
+        var onConnect = function(port) {
+          port.onMessage.addListener(onMessage);
+          ports[port.name] = port;
+          port.onDisconnect.addListener(function() {
+              delete ports[port.name];
+          });
+        };
+        chrome.extension.onConnect.addListener(onConnect);
+
         /* boiler plate for dynamic icons. most people will use an
            actual image for an icon with the "icons" property of manifest.json
            or the "default_icon" property of "browser_action" */
         chrome.tabs.onCreated.addListener(function(tab) {
           chrome.browserAction.setIcon({imageData:drawIcon(), tabId:tab.id});
-        });
-        chrome.tabs.onUpdated.addListener(function(tabId, info) {
-           //if (info.status === 'loading')
-            //console.log('Loading url ... ' + info.url)
         });
         chrome.browserAction.setIcon({imageData:drawIcon()});
       };

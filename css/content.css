@@ -1,4 +1,5 @@
-body { margin:0 !important; padding:0 important; /* >:) */}
+body { margin:0 !important; padding:0 !important; /* >:) */}
+iframe { border:0px !important /* >:) */}
 #mu-stm {
   display:absolute;
   top:0;
@@ -7,7 +8,7 @@ body { margin:0 !important; padding:0 important; /* >:) */}
   white-space: nowrap;
   text-align:left;
   height:20px;
-  z-index:9999;
+  z-index:9999999;
   margin:0;
   color:#fff;
   padding:.5em .5em .5em 2em;
