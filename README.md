@@ -4,7 +4,13 @@ A wee [Meetup.com](http://meetup.com) rsvp stream ticker for google chrome.
 
 ## install
 
-### download
+You can either download a clickable extention file
+
+   * download [this file](https://github.com/downloads/meetup/stream-chrome-plugin/mu-stream.crx) to install the extension
+
+Or install as source
+
+### download source
 
   * download and open [google chrome](http://www.google.com/chrome/)
   * point the url bar to [chrome://extensions/](chrome://extensions/)
@@ -13,12 +19,6 @@ A wee [Meetup.com](http://meetup.com) rsvp stream ticker for google chrome.
     `cd path/to/somewhere && git clone git://github.com/meetup/stream-chrome-plugin.git`
 
 ### install
-
-You can either download a clickable extention file
-
-   * download [this file](https://github.com/downloads/meetup/stream-chrome-plugin/mu-stream.crx) to install the extension
-
-Or install as source
 
   * on chrome's extension page, click the **Developer mode** on the top right to reveal the developer options
   * click the **Load unpacked extention...** button in Developer Mode
